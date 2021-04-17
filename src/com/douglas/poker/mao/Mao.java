@@ -9,19 +9,76 @@ import java.util.List;
 public class Mao {
     private final List<Carta> cartas;
     private final PokerIO io;
+    private EnumJogadas jogada;
 
     public Mao(PokerIO io){
         this.cartas = new ArrayList<>();
         this.io = io;
+        this.jogada = EnumJogadas.Indefinido;
     }
 
-    public void solicitaCartas(){
+    public Mao solicitaCartas(){
         for (int i = 0; i < 5; i++) {
             this.cartas.add(io.selecionaCarta());
         }
+        return this;
     }
 
-    public List<Carta> getCartas() {
-        return cartas;
+    public void ordenaMao(){
+        this.cartas.sort(Carta::compareTo);
     }
+
+    public boolean flush(){
+        String naipe = this.cartas.get(0).getNaipe();
+        for (Carta carta: this.cartas) {
+            if(!carta.getNaipe().equals(naipe)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean straight(){
+        int valor = this.cartas.get(0).getValor();
+        for (Carta carta: this.cartas) {
+            if(carta.getValor() != valor++){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean royalFlush(){
+        int incremento = 0;
+        for (Carta carta: this.cartas) {
+            if(carta.getValor() != 10 + incremento){
+                return false;
+            };
+            incremento++;
+        }
+        return true;
+    }
+
+    public Mao verificaMao(){
+        this.ordenaMao();
+
+        if(this.straight()){
+            if(this.flush()){
+                if(this.royalFlush()){
+                    this.jogada = EnumJogadas.Royal_Flush;
+                } else {
+                    this.jogada = EnumJogadas.Straight_Flush;
+                }
+            } else {
+                this.jogada = EnumJogadas.Straight;
+            }
+        } else {
+            if(this.flush()){
+                this.jogada = EnumJogadas.Flush;
+            }
+        }
+        System.out.println("jogada:" + this.jogada);
+        return this;
+    }
+
 }

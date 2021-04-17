@@ -1,6 +1,6 @@
 package com.douglas.poker.carta;
 
-public class Carta {
+public class Carta implements Comparable<Carta> {
     private int valor;
     private String naipe;
 
@@ -25,5 +25,10 @@ public class Carta {
 
     public String getNaipe() {
         return naipe;
+    }
+
+    @Override
+    public int compareTo(Carta carta) {
+        return Integer.compare(this.valor, carta.valor);
     }
 }
