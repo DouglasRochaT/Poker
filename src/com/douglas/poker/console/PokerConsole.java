@@ -3,18 +3,20 @@ package com.douglas.poker.console;
 import com.douglas.poker.carta.Carta;
 import com.douglas.poker.carta.EnumNaipe;
 import com.douglas.poker.carta.EnumValor;
+import com.douglas.poker.io.PokerIO;
 
 import java.util.Locale;
 import java.util.Scanner;
 
-public class PokerConsole {
+public class PokerConsole implements PokerIO {
     Scanner leitor;
 
     public PokerConsole(){
         this.leitor = new Scanner(System.in);
     }
 
-    public Carta selicionaCarta(){
+    @Override
+    public Carta selecionaCarta(){
         Carta carta = new Carta();
         System.out.println("Escolha o valor da carta e o naipe da carta:");
 

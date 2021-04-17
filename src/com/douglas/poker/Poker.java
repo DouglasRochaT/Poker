@@ -2,12 +2,15 @@ package com.douglas.poker;
 
 import com.douglas.poker.carta.Carta;
 import com.douglas.poker.console.PokerConsole;
+import com.douglas.poker.mao.Mao;
 
 public class Poker {
-
     public static void main(String[] args) {
-        PokerConsole poker = new PokerConsole();
-        Carta temp = poker.selicionaCarta();
-        System.out.println(temp.getValor() + " " + temp.getNaipe());
+        Mao temp = new Mao(new PokerConsole());
+        temp.solicitaCartas();
+        for (Carta carta: temp.getCartas()) {
+            System.out.println(carta.getValor());
+            System.out.println(carta.getNaipe());
+        }
     }
 }

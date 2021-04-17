@@ -1,8 +1,13 @@
 package com.douglas.poker.carta;
 
 public class Carta {
-    private int valor = 0;
-    private String naipe = "";
+    private int valor;
+    private String naipe;
+
+    public Carta(){
+        this.valor = 0;
+        this.naipe = "";
+    }
 
     public Carta setValor(int valor) {
         this.valor = valor;
