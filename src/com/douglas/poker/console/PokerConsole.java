@@ -39,7 +39,7 @@ public class PokerConsole implements PokerIO {
             String naipe;
             try{
                 naipe = EnumNaipe.valueOf(inputNaipe).naipe;
-            } catch (IllegalArgumentException naipeException){
+            } catch (IllegalArgumentException valueException){
                 naipe = "";
             }
 

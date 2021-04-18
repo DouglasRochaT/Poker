@@ -59,6 +59,26 @@ public class Mao {
         return true;
     }
 
+    public int qtdValoresIguais(){
+        int contador = 0, quantidade = 0;
+        int valorComparado = cartas.get(0).getValor();
+        for (Carta carta: cartas) {
+            if(carta.getValor() == valorComparado){
+                contador++;
+            } else {
+                if(contador > quantidade){
+                    quantidade = contador;
+                }
+                valorComparado = carta.getValor();
+                contador = 1;
+            }
+        }
+        if(contador > quantidade){
+            quantidade = contador;
+        }
+        return quantidade;
+    }
+
     public Mao verificaMao(){
         this.ordenaMao();
 
@@ -77,7 +97,20 @@ public class Mao {
                 this.jogada = EnumJogadas.Flush;
             }
         }
-        System.out.println("jogada:" + this.jogada);
+
+        switch (this.qtdValoresIguais()){
+            case 4:
+                this.jogada = EnumJogadas.Quadra;
+                break;
+            case 3:
+                this.jogada = EnumJogadas.Trinca;
+                break;
+            case 2:
+                this.jogada = EnumJogadas.Um_Par;
+                break;
+        }
+
+        System.out.println("Jogada: " + this.jogada + ", com " + this.qtdValoresIguais() + " valores iguais:");
         return this;
     }
 
