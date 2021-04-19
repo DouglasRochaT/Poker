@@ -70,8 +70,8 @@ public class Mao implements Comparable<Mao>{
     }
 
     @Override
-    public int compareTo(Mao mao) {
-        int resultado = Integer.compare(this.jogada.peso, mao.jogada.peso);
+    public int compareTo(Mao outra) {
+        int resultado = Integer.compare(this.jogada.peso, outra.jogada.peso);
         if(resultado > 0 ){
             return 1;
         } else if (resultado < 0){
