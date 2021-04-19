@@ -8,7 +8,7 @@ import com.douglas.poker.jogadas.Jogadas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mao {
+public class Mao implements Comparable<Mao>{
     private final List<Carta> cartas;
     private final PokerIO io;
     private EnumJogadas jogada;
@@ -31,9 +31,11 @@ public class Mao {
     private void ordenaMao(){
         this.cartas.sort(Carta::compareTo);
     }
-    private void defineCaraAlta(){
+
+    private void defineCartaAlta(){
         this.cartaAlta = cartas.get(4).getValor();
     }
+
     private void defineJogada(){
         if (Jogadas.royalFlush(this.cartas)) {
             this.jogada = EnumJogadas.Royal_Flush;
@@ -61,10 +63,28 @@ public class Mao {
     public Mao verificaMao(){
         this.ordenaMao();
         this.defineJogada();
-        this.defineCaraAlta();
+        this.defineCartaAlta();
 
         System.out.println("Jogada: " + this.jogada + ", carta alta: " + this.cartaAlta + ".");
         return this;
     }
 
+    @Override
+    public int compareTo(Mao mao) {
+        int resultado = Integer.compare(this.jogada.peso, mao.jogada.peso);
+        if(resultado > 0 ){
+            return 1;
+        } else if (resultado < 0){
+            return -1;
+        }
+        return 0;
+    }
+
+    public int getCartaAlta() {
+        return cartaAlta;
+    }
+
+    public EnumJogadas getJogada() {
+        return jogada;
+    }
 }

@@ -17,6 +17,17 @@ public class Poker {
     public void iniciar(){
         primeiraMao.solicitaCartas().verificaMao();
         segundaMao.solicitaCartas().verificaMao();
-    }
 
+        if(primeiraMao.compareTo(segundaMao) > 0){
+            System.out.println("Primeira Mão ganhou!");
+            System.out.println("Jogada: " + primeiraMao.getJogada());
+            System.out.println("Carta alta: " + primeiraMao.getCartaAlta());
+        } else if(primeiraMao.compareTo(segundaMao) < 0){
+            System.out.println("Segunda Mão ganhou!");
+            System.out.println("Jogada: " + segundaMao.getJogada());
+            System.out.println("Carta alta: " + segundaMao.getCartaAlta());
+        } else {
+            System.out.println("Não foi possível definir o vencerdor ainda.");
+        }
+    }
 }
