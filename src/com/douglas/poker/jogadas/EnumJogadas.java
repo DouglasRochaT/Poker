@@ -1,4 +1,4 @@
-package com.douglas.poker.mao;
+package com.douglas.poker.jogadas;
 
 public enum EnumJogadas {
     Indefinido(0),

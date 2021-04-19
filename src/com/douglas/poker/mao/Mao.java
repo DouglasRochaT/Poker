@@ -2,6 +2,8 @@ package com.douglas.poker.mao;
 
 import com.douglas.poker.carta.Carta;
 import com.douglas.poker.io.PokerIO;
+import com.douglas.poker.jogadas.EnumJogadas;
+import com.douglas.poker.jogadas.Jogadas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +12,13 @@ public class Mao {
     private final List<Carta> cartas;
     private final PokerIO io;
     private EnumJogadas jogada;
+    private int cartaAlta;
 
     public Mao(PokerIO io){
         this.cartas = new ArrayList<>();
         this.io = io;
         this.jogada = EnumJogadas.Indefinido;
+        this.cartaAlta = 0;
     }
 
     public Mao solicitaCartas(){
@@ -24,93 +28,42 @@ public class Mao {
         return this;
     }
 
-    public void ordenaMao(){
+    private void ordenaMao(){
         this.cartas.sort(Carta::compareTo);
     }
-
-    public boolean flush(){
-        String naipe = this.cartas.get(0).getNaipe();
-        for (Carta carta: this.cartas) {
-            if(!carta.getNaipe().equals(naipe)){
-                return false;
-            }
-        }
-        return true;
+    private void defineCaraAlta(){
+        this.cartaAlta = cartas.get(4).getValor();
     }
-
-    public boolean straight(){
-        int valor = this.cartas.get(0).getValor();
-        for (Carta carta: this.cartas) {
-            if(carta.getValor() != valor++){
-                return false;
-            }
+    private void defineJogada(){
+        if (Jogadas.royalFlush(this.cartas)) {
+            this.jogada = EnumJogadas.Royal_Flush;
+        } else if(Jogadas.straightFlush(this.cartas)){
+            this.jogada = EnumJogadas.Straight_Flush;
+        } else if(Jogadas.quadra(this.cartas)) {
+            this.jogada = EnumJogadas.Quadra;
+        } else if(Jogadas.fullHouse(this.cartas)) {
+            this.jogada = EnumJogadas.Full_House;
+        } else if(Jogadas.flush(this.cartas)) {
+            this.jogada = EnumJogadas.Flush;
+        } else if(Jogadas.straight(this.cartas)){
+            this.jogada = EnumJogadas.Straight;
+        } else if(Jogadas.trinca(this.cartas)){
+            this.jogada = EnumJogadas.Trinca;
+        } else if(Jogadas.doisPares(this.cartas)){
+            this.jogada = EnumJogadas.Dois_Pares;
+        } else if(Jogadas.umPar(this.cartas)){
+            this.jogada = EnumJogadas.Um_Par;
+        } else {
+            this.jogada = EnumJogadas.Carta_Alta;
         }
-        return true;
-    }
-
-    public boolean royalFlush(){
-        int incremento = 0;
-        for (Carta carta: this.cartas) {
-            if(carta.getValor() != 10 + incremento){
-                return false;
-            };
-            incremento++;
-        }
-        return true;
-    }
-
-    public int qtdValoresIguais(){
-        int contador = 0, quantidade = 0;
-        int valorComparado = cartas.get(0).getValor();
-        for (Carta carta: cartas) {
-            if(carta.getValor() == valorComparado){
-                contador++;
-            } else {
-                if(contador > quantidade){
-                    quantidade = contador;
-                }
-                valorComparado = carta.getValor();
-                contador = 1;
-            }
-        }
-        if(contador > quantidade){
-            quantidade = contador;
-        }
-        return quantidade;
     }
 
     public Mao verificaMao(){
         this.ordenaMao();
+        this.defineJogada();
+        this.defineCaraAlta();
 
-        if(this.straight()){
-            if(this.flush()){
-                if(this.royalFlush()){
-                    this.jogada = EnumJogadas.Royal_Flush;
-                } else {
-                    this.jogada = EnumJogadas.Straight_Flush;
-                }
-            } else {
-                this.jogada = EnumJogadas.Straight;
-            }
-        } else {
-            if(this.flush()){
-                this.jogada = EnumJogadas.Flush;
-            }
-        }
-
-        switch (this.qtdValoresIguais()){
-            case 4:
-                this.jogada = EnumJogadas.Quadra;
-                break;
-            case 3:
-                this.jogada = EnumJogadas.Trinca;
-                break;
-            case 2:
-                this.jogada = EnumJogadas.Um_Par;
-                break;
-        }
-
-        System.out.println("Jogada: " + this.jogada + ", com " + this.qtdValoresIguais() + " valores iguais:");
+        System.out.println("Jogada: " + this.jogada + ", carta alta: " + this.cartaAlta + ".");
         return this;
     }
 
