@@ -16,6 +16,11 @@ public class Jogadas {
     }
 
     public static boolean straight(List<Carta> cartas){
+        if(cartas.get(0).getValor() == 2 && cartas.get(1).getValor() == 3
+        && cartas.get(2).getValor() == 4 && cartas.get(3).getValor() == 5
+        && cartas.get(4).getValor() == 14){
+            return true; // A , 2, 3, 4, 5
+        }
         int valor = cartas.get(0).getValor();
         for (Carta carta: cartas) {
             if(carta.getValor() != valor++){
