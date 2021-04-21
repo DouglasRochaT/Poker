@@ -9,31 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mao implements Comparable<Mao>{
-    private final List<Carta> cartas;
-    private final PokerIO io;
+    private List<Carta> cartas;
     private EnumJogadas jogada;
-    private int cartaAlta;
 
-    public Mao(PokerIO io){
+    public Mao(){
         this.cartas = new ArrayList<>();
-        this.io = io;
         this.jogada = EnumJogadas.Indefinido;
-        this.cartaAlta = 0;
     }
 
-    public Mao solicitaCartas(){
-        for (int i = 0; i < 5; i++) {
-            this.cartas.add(io.selecionaCarta());
-        }
-        return this;
+    public void setCartas(List<Carta> cartas) {
+        this.cartas = cartas;
     }
 
     private void ordenaMao(){
         this.cartas.sort(Carta::compareTo);
-    }
-
-    private void defineCartaAlta(){
-        this.cartaAlta = cartas.get(4).getValor();
     }
 
     private void defineJogada(){
@@ -63,9 +52,6 @@ public class Mao implements Comparable<Mao>{
     public Mao verificaMao(){
         this.ordenaMao();
         this.defineJogada();
-        this.defineCartaAlta();
-
-        System.out.println("Jogada: " + this.jogada + ", carta alta: " + this.cartaAlta + ".");
         return this;
     }
 
@@ -115,14 +101,14 @@ public class Mao implements Comparable<Mao>{
             if(outra.cartas.get(2).getValor() == outra.cartas.get(3).getValor()){
                 segundaMaoParBaixo = outra.cartas.get(0).getValor();
                 segundaMaoParAlto = outra.cartas.get(2).getValor();
-                segundaMaoKicker = this.cartas.get(4).getValor();
+                segundaMaoKicker = outra.cartas.get(4).getValor();
             } else {
                 segundaMaoParBaixo = outra.cartas.get(1).getValor();
                 segundaMaoParAlto = outra.cartas.get(3).getValor();
-                if(this.cartas.get(2).getValor() == this.cartas.get(1).getValor()){
-                    segundaMaoKicker = this.cartas.get(0).getValor();
+                if(outra.cartas.get(2).getValor() == outra.cartas.get(1).getValor()){
+                    segundaMaoKicker = outra.cartas.get(0).getValor();
                 } else {
-                    segundaMaoKicker = this.cartas.get(2).getValor();
+                    segundaMaoKicker = outra.cartas.get(2).getValor();
                 }
             }
             int compareTo = Integer.compare(primeiraMaoParAlto, segundaMaoParAlto);
@@ -191,10 +177,6 @@ public class Mao implements Comparable<Mao>{
         } else {
             return this.desempate(outra);
         }
-    }
-
-    public int getCartaAlta() {
-        return cartaAlta;
     }
 
     public EnumJogadas getJogada() {

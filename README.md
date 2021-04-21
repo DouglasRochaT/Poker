@@ -1,8 +1,13 @@
 ## Poker
 Aplicação em terminal para a verificação do vencedor em um jogo de poker.
 
-## Exucução
+## Execução
 Usando Maven:
 ```
 mvn package
-java -cp target/Poker-0.4.jar com.douglas.Principal
+java -jar ./target/Poker-0.5.jar
+```
+Binário pré-compilado:
+```
+java -jar Poker-0.5.jar
+```

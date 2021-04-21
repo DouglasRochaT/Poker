@@ -1,7 +1,7 @@
 package com.douglas.poker.io;
 
-import com.douglas.poker.carta.Carta;
+import com.douglas.poker.mao.Mao;
 
 public interface PokerIO {
-    Carta selecionaCarta();
+    void iniciar(Mao primeiraMao, Mao segundaMao);
 }
