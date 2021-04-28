@@ -49,6 +49,10 @@ public class Mao implements Comparable<Mao>{
         }
     }
 
+    public int getValorCarta(int carta){
+        return this.cartas.get(carta).getValor();
+    }
+
     public Mao verificaMao(){
         this.ordenaMao();
         this.defineJogada();
@@ -71,12 +75,12 @@ public class Mao implements Comparable<Mao>{
             }
             return 0;
         } else if(this.jogada == EnumJogadas.Straight){
-            int cartaPrimeiraMao = this.cartas.get(4).getValor();
-            int cartaSegundaMao = outra.cartas.get(4).getValor();
-            if(cartaPrimeiraMao == 14 && this.cartas.get(3).getValor() == 5){
+            int cartaPrimeiraMao = this.getValorCarta(4);
+            int cartaSegundaMao = outra.getValorCarta(4);
+            if(cartaPrimeiraMao == 14 && this.getValorCarta(3) == 5){
                 cartaPrimeiraMao = 5;
             }
-            if(cartaSegundaMao == 14 && outra.cartas.get(3).getValor() == 5){
+            if(cartaSegundaMao == 14 && outra.getValorCarta(3) == 5){
                 cartaSegundaMao = 5;
             }
             return Integer.compare(cartaPrimeiraMao, cartaSegundaMao);
@@ -85,30 +89,30 @@ public class Mao implements Comparable<Mao>{
         } else if(this.jogada == EnumJogadas.Dois_Pares){
             int primeiraMaoParBaixo, primeiraMaoParAlto, primeiraMaoKicker;
             int segundaMaoParBaixo, segundaMaoParAlto, segundaMaoKicker;
-            if(this.cartas.get(2).getValor() == this.cartas.get(3).getValor()){
-                primeiraMaoParBaixo = this.cartas.get(0).getValor();
-                primeiraMaoParAlto = this.cartas.get(2).getValor();
-                primeiraMaoKicker = this.cartas.get(4).getValor();
+            if(this.getValorCarta(2) == this.getValorCarta(3)){
+                primeiraMaoParBaixo = this.getValorCarta(0);
+                primeiraMaoParAlto = this.getValorCarta(2);
+                primeiraMaoKicker = this.getValorCarta(4);
             } else {
-                primeiraMaoParBaixo = this.cartas.get(1).getValor();
-                primeiraMaoParAlto = this.cartas.get(3).getValor();
-                if(this.cartas.get(2).getValor() == this.cartas.get(1).getValor()){
-                    primeiraMaoKicker = this.cartas.get(0).getValor();
+                primeiraMaoParBaixo = this.getValorCarta(1);
+                primeiraMaoParAlto = this.getValorCarta(3);
+                if(this.cartas.get(2).getValor() == this.getValorCarta(1)){
+                    primeiraMaoKicker = this.getValorCarta(0);
                 } else {
-                    primeiraMaoKicker = this.cartas.get(2).getValor();
+                    primeiraMaoKicker = this.getValorCarta(2);
                 }
             }
-            if(outra.cartas.get(2).getValor() == outra.cartas.get(3).getValor()){
-                segundaMaoParBaixo = outra.cartas.get(0).getValor();
-                segundaMaoParAlto = outra.cartas.get(2).getValor();
-                segundaMaoKicker = outra.cartas.get(4).getValor();
+            if(outra.getValorCarta(2) == outra.getValorCarta(3)){
+                segundaMaoParBaixo = outra.getValorCarta(0);
+                segundaMaoParAlto = outra.getValorCarta(2);
+                segundaMaoKicker = outra.getValorCarta(4);
             } else {
-                segundaMaoParBaixo = outra.cartas.get(1).getValor();
-                segundaMaoParAlto = outra.cartas.get(3).getValor();
-                if(outra.cartas.get(2).getValor() == outra.cartas.get(1).getValor()){
-                    segundaMaoKicker = outra.cartas.get(0).getValor();
+                segundaMaoParBaixo = outra.getValorCarta(1);
+                segundaMaoParAlto = outra.getValorCarta(3);
+                if(outra.getValorCarta(2) == outra.getValorCarta(1)){
+                    segundaMaoKicker = outra.getValorCarta(0);
                 } else {
-                    segundaMaoKicker = outra.cartas.get(2).getValor();
+                    segundaMaoKicker = outra.getValorCarta(2);
                 }
             }
             int compareTo = Integer.compare(primeiraMaoParAlto, segundaMaoParAlto);
@@ -125,27 +129,27 @@ public class Mao implements Comparable<Mao>{
         } else if(this.jogada == EnumJogadas.Um_Par){
             int primeiraMaoValor;
             int segundaMaoValor;
-            if(this.cartas.get(0).getValor() == this.cartas.get(1).getValor()){
-                primeiraMaoValor = this.cartas.get(0).getValor();
-            } else if(this.cartas.get(3).getValor() == this.cartas.get(4).getValor()){
-                primeiraMaoValor = this.cartas.get(3).getValor();
+            if(this.getValorCarta(0) == this.getValorCarta(1)){
+                primeiraMaoValor = this.getValorCarta(0);
+            } else if(this.getValorCarta(3) == this.getValorCarta(4)){
+                primeiraMaoValor = this.getValorCarta(3);
             } else {
-                primeiraMaoValor = this.cartas.get(2).getValor();
+                primeiraMaoValor = this.getValorCarta(2);
             }
-            if(outra.cartas.get(0).getValor() == outra.cartas.get(1).getValor()){
-                segundaMaoValor = outra.cartas.get(0).getValor();
-            } else if(outra.cartas.get(3).getValor() == outra.cartas.get(4).getValor()){
-                segundaMaoValor = outra.cartas.get(3).getValor();
+            if(outra.getValorCarta(0) == outra.getValorCarta(1)){
+                segundaMaoValor = outra.getValorCarta(0);
+            } else if(outra.getValorCarta(3) == outra.getValorCarta(4)){
+                segundaMaoValor = outra.getValorCarta(3);
             } else {
-                segundaMaoValor = outra.cartas.get(2).getValor();
+                segundaMaoValor = outra.getValorCarta(2);
             }
             int compareTo = Integer.compare(primeiraMaoValor, segundaMaoValor);
             if(compareTo != 0){
                 return compareTo;
             } else {
-                List<Carta> primeiraMao = new ArrayList<Carta>(this.cartas);
+                List<Carta> primeiraMao = new ArrayList<>(this.cartas);
                 primeiraMao.removeIf(carta -> carta.getValor() == primeiraMaoValor);
-                List<Carta> segundaMao = new ArrayList<Carta>(outra.cartas);
+                List<Carta> segundaMao = new ArrayList<>(outra.cartas);
                 segundaMao.removeIf(carta -> carta.getValor() == segundaMaoValor);
 
                 for (int carta = 2; carta > 0; carta--) {
